@@ -1,23 +1,35 @@
-env: # Environt variable to pass to all tasks
-    CIRRUS_CLONE_DEPTH: 1 # No need to clone with whole history
-    CIRRUS_WORKING_DIR: "/tmp/ci" # Where to clone repo
-    rclone_config: "ENCRYPTED[1e4bfe76d933bdff3a61adb9529d60287b19bff7e61797b027ac3df52af879bb5a9d03d72cd0880ff1c01871b31d1e7a"
+env: # Environment variables to pass to all tasks
+    CIRRUS_CLONE_DEPTH: 1
+    CIRRUS_WORKING_DIR: "/tmp/ci"
 
+    rclone_config: ""
 
 task:
-    name: Buildbomt
-    timeout_in: 122m
+    name: DotOS
+    timeout_in: 120m
     container:
-      image: mrkhan007/aosp:latest
+      image: apon77/aosp:latest
       cpu: 8
-      memory: 30G     
-    download_ccache_script:
-      - bash download_ccache 
+      memory: 32G
+    download_ccache_background_script:
+      - set -vx
+      - command=$(head CIRRUS_WORKING_DIR/ccache.sh -n $(expr $(grep upload CIRRUS_WORKING_DIR/ccache.sh -n | cut -f1 -d:) - 1))
+      - bash -c "$command"
     sync_script:
-      - bash sync
+      - set -vx
+      - command=$(head CIRRUS_WORKING_DIR/build.sh -n $(expr $(grep "# build" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) - 1))
+      - bash -c "$command"
+    monitor_background_script:
+      - ./monitor
     build_script:
-      - bash build
+      - set -vx
+      - command=$(tail CIRRUS_WORKING_DIR/build.sh -n +$(expr $(grep "# build" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) + 2) | head -n -16)
+      - bash -c "$command"
+    upload_rom_script:
+      - set -vx
+      - command=$(tail CIRRUS_WORKING_DIR/build.sh -n +$(expr $(grep "# upload" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) + 2))
+      - bash -c "$command"
     upload_ccache_script:
-      - bash upload_ccache
-#start build 
-
+      - set -vx
+      - command=$(tail CIRRUS_WORKING_DIR/ccache.sh -n +$(expr $(grep "# upload" CIRRUS_WORKING_DIR/ccache.sh -n | cut -f1 -d:) + 2))
+      - bash -c "$command"
