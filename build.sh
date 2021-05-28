@@ -58,7 +58,7 @@ ccache -z
 #make test-api-stubs-docs
 make bacon -j$(nproc --all) &
 sleep 90m
-kill %1 || echo "Build already completed"
+kill %1
 ccache -s
 
 # upload
@@ -73,6 +73,6 @@ up(){
 #	time rclone copy $1 aosp:ccache/ccache-ci -P # apon is my rclone config name, 
 #}
 
-up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Build not completed yet"
+#up out/target/product/RMX1941/*UNOFFICIAL*.zip
 
 ccache -s
