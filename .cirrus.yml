@@ -13,23 +13,23 @@ task:
       memory: 16G
     download_ccache_background_script:
       - set -vx
-      - command=$(head /tmp/ci/ccache.sh -n $(expr $(grep upload CIRRUS_WORKING_DIR/ccache.sh -n | cut -f1 -d:) - 1))
+      - command=$(head /tmp/ci/ccache.sh -n $(expr $(grep upload /tmp/ci/ccache.sh -n | cut -f1 -d:) - 1))
       - bash -c "$command"
     sync_script:
       - set -vx
-      - command=$(head /tmp/ci/build.sh -n $(expr $(grep "# build" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) - 1))
+      - command=$(head /tmp/ci/build.sh -n $(expr $(grep "# build" /tmp/ci/build.sh -n | cut -f1 -d:) - 1))
       - bash -c "$command"
     monitor_background_script:
       - ./monitor
     build_script:
       - set -vx
-      - command=$(tail /tmp/cibuild.sh -n +$(expr $(grep "# build" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) + 2) | head -n -16)
+      - command=$(tail /tmp/ci/build.sh -n +$(expr $(grep "# build" /tmp/ci/build.sh -n | cut -f1 -d:) + 2) | head -n -16)
       - bash -c "$command"
     upload_rom_script:
       - set -vx
-      - command=$(tail /tmp/ci/build.sh -n +$(expr $(grep "# upload" CIRRUS_WORKING_DIR/build.sh -n | cut -f1 -d:) + 2))
+      - command=$(tail /tmp/ci/build.sh -n +$(expr $(grep "# upload" /tmp/ci/build.sh -n | cut -f1 -d:) + 2))
       - bash -c "$command"
     upload_ccache_script:
       - set -vx
-      - command=$(tail CIRRUS_WORKING_DIR/ccache.sh -n +$(expr $(grep "# upload" CIRRUS_WORKING_DIR/ccache.sh -n | cut -f1 -d:) + 2))
+      - command=$(tail CIRRUS_WORKING_DIR/ccache.sh -n +$(expr $(grep "# upload" /tmp/ci/ccache.sh -n | cut -f1 -d:) + 2))
       - bash -c "$command"
