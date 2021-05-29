@@ -12,7 +12,6 @@ repo init -q --no-repo-verify --depth=1 "$ROM_MANIFEST" -b "$BRANCH" -g default,
 
 git clone "$LOCAL_MANIFEST" --depth 1 -b "$MANIFEST_BRANCH" .repo/local_manifests
 
-
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j 30 || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
 # patches
@@ -22,10 +21,10 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 #patch -p1 < *.patch
 #cd ../..
 
-cd frameworks/base
-curl -LO https://github.com/PixelExperience/frameworks_base/commit/37f5a323245b0fd6269752742a2eb7aa3cae24a7.patch
-patch -p1 < *.patch
-cd ../..
+#cd frameworks/base
+#curl -LO https://github.com/PixelExperience/frameworks_base/commit/37f5a323245b0fd6269752742a2eb7aa3cae24a7.patch
+#patch -p1 < *.patch
+#cd ../..
 
 #cd frameworks/opt/net/wifi
 #wget https://github.com/PixelExperience/frameworks_opt_net_wifi/commit/3bd2c14fbda9c079a4dc39ff4601ba54da589609.patch
@@ -52,13 +51,13 @@ ccache -M 20G
 ccache -o compression=true
 ccache -z
 
-
+# use first three lines one time while generating ccache and 2nd time at time of final build
 #make api-stubs-docs
 #make system-api-stubs-docs
 #make test-api-stubs-docs
 make bacon -j$(nproc --all) &
 sleep 90m
-kill %1
+kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
@@ -73,6 +72,6 @@ up(){
 #	time rclone copy $1 aosp:ccache/ccache-ci -P # apon is my rclone config name, 
 #}
 
-#up out/target/product/RMX1941/*UNOFFICIAL*.zip
+up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s
