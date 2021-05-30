@@ -54,10 +54,10 @@ ccache -z
 # use first three lines one time while generating ccache and 2nd time at time of final build
 make api-stubs-docs
 make system-api-stubs-docs
-make test-api-stubs-docs
-mka bacon -j$(nproc --all)
-#sleep 90m
-#kill %1 || echo "Build already failed or completed"
+make test-api-stubs-docs &
+#mka bacon -j$(nproc --all)
+sleep 20m
+kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
