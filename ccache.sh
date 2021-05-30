@@ -6,7 +6,7 @@ nproc
 cat /etc/os*
 env
 
-url=https://arcrec.mark41stark.workers.dev/0://ccache.tar.gz
+url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci/ccache.tar.gz
 
 cd /tmp
 time aria2c $url -x16 -s50
@@ -26,4 +26,4 @@ time com ccache 1
 
 mkdir -p ~/.config/rclone
 echo "$rclone_config" > ~/.config/rclone/rclone.conf
-time rclone copy ccache.tar.gz aosp:ccache/ccache-ci2 -P
+time rclone copy ccache.tar.gz aosp:ccache/ccache-ci -P
