@@ -55,9 +55,9 @@ ccache -z
 #make api-stubs-docs
 #make system-api-stubs-docs
 #make test-api-stubs-docs
-mka bacon -j$(nproc --all)
+mka bacon -j$(nproc --all) &
 sleep 90m
-#kill %1 || echo "Build already failed or completed"
+kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
