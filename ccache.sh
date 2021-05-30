@@ -6,12 +6,25 @@ nproc
 cat /etc/os*
 env
 
-url=https://m.mark41stark.workers.dev/0://ccache.tar.gz
+url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci2/ccache.tar.gz
 
 cd /tmp
 time aria2c $url -x16 -s50
 time tar xf ccache.tar.gz
 rm -rf ccache.tar.gz
+
+# monitor
+
+export CCACHE_DIR=/tmp/ccache
+sleep 2m
+
+while :
+do
+ccache -s
+echo ''
+top -b -i -n 1
+sleep 1m
+done
 
 # upload
 
