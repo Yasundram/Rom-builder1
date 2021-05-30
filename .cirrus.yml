@@ -5,12 +5,12 @@ env: # Environment variables to pass to all tasks
     rclone_config: "ENCRYPTED[6fd591d0c10033e479b128018750feb4e7b81da07bba5af3fd2335ff43f6c0925a40fa719c46f564a5cb98701a61078c]"
 
 task:
-    name: DotOS
+    name: PixelExperience
     timeout_in: 120m
     container:
       image: apon77/aosp:latest
-      cpu: 4
-      memory: 16G
+      cpu: 8
+      memory: 32G
     download_ccache_background_script:
       - set -evx
       - command=$(head /tmp/ci/ccache.sh -n $(expr $(grep upload /tmp/ci/ccache.sh -n | cut -f1 -d:) - 1))
@@ -33,4 +33,3 @@ task:
       - set -evx
       - command=$(tail /tmp/ci/ccache.sh -n +$(expr $(grep "# upload" /tmp/ci/ccache.sh -n | cut -f1 -d:) + 2))
       - bash -c "$command"
-

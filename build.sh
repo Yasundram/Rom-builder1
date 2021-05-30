@@ -1,9 +1,9 @@
 # sync
 
-ROM_MANIFEST=git://github.com/DotOS/manifest.git
-BRANCH=dot11
+ROM_MANIFEST=https://github.com/PixelExperience/manifest
+BRANCH=eleven
 LOCAL_MANIFEST=https://github.com/P-Salik/local_manifest
-MANIFEST_BRANCH=DotOS
+MANIFEST_BRANCH=test
 
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -41,7 +41,7 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 cd /tmp/rom
 
 . build/envsetup.sh
-lunch dot_RMX1941-userdebug
+lunch aosp_RMX1941-userdebug
 
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
@@ -52,12 +52,12 @@ ccache -o compression=true
 ccache -z
 
 # use first three lines one time while generating ccache and 2nd time at time of final build
-#make api-stubs-docs
-#make system-api-stubs-docs
-#make test-api-stubs-docs
-make bacon -j$(nproc --all) &
-sleep 90m
-kill %1 || echo "Build already failed or completed"
+make api-stubs-docs
+make system-api-stubs-docs
+make test-api-stubs-docs
+mka bacon -j$(nproc --all)
+#sleep 90m
+#kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
