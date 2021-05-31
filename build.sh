@@ -44,6 +44,7 @@ cd /tmp/rom
 lunch fluid_RMX1941-userdebug
 
 export SKIP_API_CHECKS=true
+export _JAVA_OPTIONS="-Xmx4g"
 
 # setup ccache
 export CCACHE_DIR=/tmp/ccache
@@ -56,13 +57,13 @@ ccache -z
 
 # use first three lines one time while generating ccache and 2nd time at time of final build
 # metalava
-#mka api-stubs-docs
-#mka system-api-stubs-docs
-#mka test-api-stubs-docs
+make api-stubs-docs
+make system-api-stubs-docs
+make test-api-stubs-docs
 
-mka bacon -j$(nproc --all) &
-sleep 95m
-kill %1 || echo "Build already failed or completed"
+mka bacon -j$(nproc --all)
+#sleep 95m
+#kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
@@ -73,10 +74,10 @@ ccache -s
 #}
 
 
-#up(){
-#	time rclone copy $1 aosp:ccache/ccache-ci -P # apon is my rclone config name, 
-#}
+up(){
+	time rclone copy $1 aosp:ccache/ccache-ci -P
+}
 
-#up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
+up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s
