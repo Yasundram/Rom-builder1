@@ -8,7 +8,7 @@ task:
     name: PixelExperience
     timeout_in: 120m
     container:
-      image:mrkhan007/aosp:latest
+      image: mrkhan007/aosp:latest
       cpu: 8
       memory: 32G
     download_ccache_background_script:
