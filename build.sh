@@ -8,7 +8,7 @@ MANIFEST_BRANCH=test
 mkdir -p /tmp/rom
 cd /tmp/rom
 
-repo init -q --no-repo-verify --depth=1 "$ROM_MANIFEST" -b "$BRANCH" -g default,-device,-mips,-darwin,-notdefault
+repo init -q --no-repo-verify --depth=1 -u "$ROM_MANIFEST" -b "$BRANCH" -g default,-device,-mips,-darwin,-notdefault
 
 git clone "$LOCAL_MANIFEST" --depth 1 -b "$MANIFEST_BRANCH" .repo/local_manifests
 
