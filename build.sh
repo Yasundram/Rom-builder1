@@ -1,9 +1,9 @@
 # sync
 
-ROM_MANIFEST=https://github.com/PixelExperience/manifest
-BRANCH=eleven
+ROM_MANIFEST=https://github.com/Project-Fluid/manifest.git
+BRANCH=fluid-11
 LOCAL_MANIFEST=https://github.com/P-Salik/local_manifest
-MANIFEST_BRANCH=test
+MANIFEST_BRANCH=FluidOS
 
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -16,10 +16,10 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 
 # patches
 
-#cd external/selinux
-#wget https://github.com/PixelExperience/external_selinux/commit/9d6ebe89430ffe0aeeb156f572b2a810f9dc98cc.patch
-#patch -p1 < *.patch
-#cd ../..
+cd external/selinux
+wget https://github.com/PixelExperience/external_selinux/commit/9d6ebe89430ffe0aeeb156f572b2a810f9dc98cc.patch
+patch -p1 < *.patch
+cd ../..
 
 #cd frameworks/base
 #curl -LO https://github.com/PixelExperience/frameworks_base/commit/37f5a323245b0fd6269752742a2eb7aa3cae24a7.patch
@@ -41,8 +41,11 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 cd /tmp/rom
 
 . build/envsetup.sh
-lunch aosp_RMX1941-userdebug
+lunch fluid_RMX1941-userdebug
 
+export SKIP_API_CHECKS=true
+
+# setup ccache
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
@@ -58,22 +61,22 @@ ccache -z
 #mka test-api-stubs-docs
 
 mka bacon -j$(nproc --all) &
-sleep 90m
+sleep 95m
 kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
 
-up(){
-	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+#up(){
+#	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 	# 14 days, 10 GB limit
-}
+#}
 
 
 #up(){
 #	time rclone copy $1 aosp:ccache/ccache-ci -P # apon is my rclone config name, 
 #}
 
-up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
+#up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s
