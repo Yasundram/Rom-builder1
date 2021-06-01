@@ -1,9 +1,9 @@
 # sync
 
-ROM_MANIFEST=https://github.com/Project-Fluid/manifest.git
-BRANCH=fluid-11
+ROM_MANIFEST=https://github.com/ArrowOS/android_manifest.git
+BRANCH=arrow-11.0
 LOCAL_MANIFEST=https://github.com/P-Salik/local_manifest
-MANIFEST_BRANCH=FluidOS
+MANIFEST_BRANCH=Arrow
 
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -41,7 +41,7 @@ cd ../..
 cd /tmp/rom
 
 . build/envsetup.sh
-lunch fluid_RMX1941-userdebug
+lunch arrow_RMX1941-userdebug
 
 export SKIP_API_CHECKS=true
 export _JAVA_OPTIONS=-Xmx16g
@@ -61,9 +61,9 @@ make api-stubs-docs
 make system-api-stubs-docs
 make test-api-stubs-docs
 
-mka bacon -j$(nproc --all)
-#sleep 60m
-#kill %1 || echo "Build already failed or completed"
+m bacon -j$(nproc --all) &
+sleep 65m
+kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
@@ -78,6 +78,6 @@ up(){
 #	time rclone copy $1 aosp:ccache/ccache-ci -P
 #}
 
-up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
+#up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s

@@ -8,7 +8,7 @@ env
 
 sudo apt-get install zram-config
 
-url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci2/ccache.tar.gz
+url=https://arcrec.mark41stark.workers.dev/0://ccache.tar.gz
 
 cd /tmp
 time aria2c $url -x16 -s50
