@@ -6,12 +6,7 @@ nproc
 cat /etc/os*
 env
 
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:shnatsel/zram
-sudo apt-get update
-sudo apt-get install zramswap-enabler
 sudo apt-get install zram-config
-sudo service zramswap start
 
 url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci2/ccache.tar.gz
 
