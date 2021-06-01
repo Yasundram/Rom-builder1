@@ -13,6 +13,13 @@ time aria2c $url -x16 -s50
 time tar xf ccache.tar.gz
 rm -rf ccache.tar.gz
 
+sudo dd if=/dev/zero of=/swapfile bs=32,768 count=33,554,432
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo /swapfile swap swap defaults 0 0 > /etc/fstab
+sudo swapon --show
+
 # monitor
 
 export CCACHE_DIR=/tmp/ccache
