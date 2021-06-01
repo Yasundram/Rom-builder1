@@ -55,29 +55,29 @@ ccache -M 20G
 ccache -o compression=true
 ccache -z
 
-# use first three lines one time while generating ccache and 2nd time at time of final build
+
 # metalava
-#make api-stubs-docs
-#make system-api-stubs-docs
-#make test-api-stubs-docs
+make api-stubs-docs
+make system-api-stubs-docs
+make test-api-stubs-docs
 
 mka bacon -j$(nproc --all) &
-sleep 90m
+sleep 60m
 kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
 
-#up(){
-#	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
-	# 14 days, 10 GB limit
-#}
-
-
 up(){
-	time rclone copy $1 aosp:ccache/ccache-ci -P
+	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
+	# 14 days, 10 GB limit
 }
 
-#up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
+
+#up(){
+#	time rclone copy $1 aosp:ccache/ccache-ci -P
+#}
+
+up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s
