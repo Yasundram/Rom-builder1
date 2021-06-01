@@ -78,6 +78,6 @@ up(){
 #	time rclone copy $1 aosp:ccache/ccache-ci -P
 #}
 
-#up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
+up out/target/product/RMX1941/*UNOFFICIAL*.zip || echo "Only ccache generated or build failed lol"
 
 ccache -s
