@@ -44,7 +44,7 @@ cd /tmp/rom
 lunch fluid_RMX1941-userdebug
 
 export SKIP_API_CHECKS=true
-export _JAVA_OPTIONS="-Xmx4g"
+export _JAVA_OPTIONS=-Xmx16g
 
 # setup ccache
 export CCACHE_DIR=/tmp/ccache
