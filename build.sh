@@ -61,9 +61,9 @@ make api-stubs-docs
 make system-api-stubs-docs
 make test-api-stubs-docs
 
-mka bacon -j$(nproc --all) &
-sleep 60m
-kill %1 || echo "Build already failed or completed"
+mka bacon -j$(nproc --all)
+#sleep 60m
+#kill %1 || echo "Build already failed or completed"
 ccache -s
 
 # upload
