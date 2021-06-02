@@ -15,6 +15,8 @@ rm -rf ccache.tar.gz
 
 # monitor
 
+sudo apt-get install zram-config
+
 export CCACHE_DIR=/tmp/ccache
 sleep 2m
 
