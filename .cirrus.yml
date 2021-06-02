@@ -2,10 +2,10 @@ env: # Environment variables to pass to all tasks
     CIRRUS_CLONE_DEPTH: 1
     CIRRUS_WORKING_DIR: "/tmp/ci"
 
-    rclone_config: "ENCRYPTED[6fd591d0c10033e479b128018750feb4e7b81da07bba5af3fd2335ff43f6c0925a40fa719c46f564a5cb98701a61078c]"
+    rclone_config: "ENCRYPTED[58fe878a01da727d9d753c2c36a81abb2c8fc23e7d85017625b11adeeeeb862e26081f6594e4e7e1964633e63be3a4c0]"
 
 task:
-    name: DotOS
+    name: descendant
     timeout_in: 120m
     container:
       image: apon77/aosp:latest
