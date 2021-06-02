@@ -6,7 +6,7 @@ nproc
 cat /etc/os*
 env
 
-url=https://gdrive.peersalik16.workers.dev/0:/ccache/ccache-ci/ccache.tar.gz
+url=https://yellow-butterfly-09f4.sundramsayss.workers.dev/ccache/
 
 cd /tmp
 time aria2c $url -x16 -s50
