@@ -1,9 +1,9 @@
 # sync
 
-ROM_MANIFEST=git://github.com/DotOS/manifest.git
-BRANCH=dot11
-LOCAL_MANIFEST=https://github.com/P-Salik/local_manifest
-MANIFEST_BRANCH=DotOS
+ROM_MANIFEST=git://github.com/descendant-xi/manifests.git
+BRANCH=eleven-staging
+LOCAL_MANIFEST=https://github.com/Yasundram/local_manifest
+MANIFEST_BRANCH=main
 
 mkdir -p /tmp/rom
 cd /tmp/rom
@@ -41,7 +41,7 @@ repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync 
 cd /tmp/rom
 
 . build/envsetup.sh
-lunch dot_RMX1941-userdebug
+lunch descendant_RMX1941-userdebug
 
 export CCACHE_DIR=/tmp/ccache
 export CCACHE_EXEC=$(which ccache)
